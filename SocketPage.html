@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style type="text/css">
+        #AppName {
+            background-color:blue;
+            color: white;
+            font-size: larger;
+            font-weight:bolder;
+        }
+        
+        #TextArea1 {
+            width: 400px;
+            height: 200px;
+            margin-top: 0px;
+        }
+        #Text1 {
+            width: 313px;
+            
+        }
+
+       
+        
+    </style>
+</head>
+<body style="height: 0px; width: 800px;">
+
+    <div id="AppName">Simple Chat App</div>
+
+&nbsp;<textarea id="TextArea1" name="S1" readonly></textarea>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Enter Your NickName <p>
+        Message text:
+        <input id="Text1" type="text" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input id="Text2" type="text" /></p>
+&nbsp;
+
+    <script type="text/javascript">
+    var connection = new WebSocket('ws://localhost:2222');
+    connection.onopen = function () {
+
+
+        Text1.onkeypress = function (key) {
+            if (key.keyCode == 13) {
+                connection.send(Text2.value + ": " + Text1.value);
+                Text1.value = "";
+            }
+
+        }
+
+        connection.onmessage = function (message) {
+            TextArea1.value = (TextArea1.value + message.data + "\n");
+        }
+
+    };
+
+    
+</script>
+</body>
+</html>
